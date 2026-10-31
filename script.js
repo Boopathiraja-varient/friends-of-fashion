@@ -773,6 +773,7 @@
 
   const filmFx = new Fireworks(filmFxCanvas, { embers: true });
   const pageFx = new Fireworks(pageFxCanvas);
+  filmFx.allowReduced = true;
   pageFx.allowReduced = true; // explicit user action, so motion is allowed
 
   const enterBtn = film.querySelector(".film__enter");
@@ -875,12 +876,7 @@
     film.setAttribute("aria-hidden", "false");
     document.body.classList.add("is-locked");
 
-    if (prefersReduced()) {
-      film.classList.add("stage-1", "stage-2", "stage-3", "stage-ready");
-      filmFx.stop();
-    } else {
-      startFilmTimeline();
-    }
+    startFilmTimeline();
 
     enterBtn.focus({ preventScroll: true });
   }
@@ -1111,11 +1107,7 @@
     pageFx.paused = document.hidden;
   });
 
-  // The welcome film plays on every open and refresh.
-  if (!prefersReduced()) {
-    // Hold the hero until the film has played.
-    setTimeout(openFilm, 450);
-  } else {
-    document.body.classList.add("is-ready");
-  }
+  // The welcome film plays on every open and refresh, even when the phone has
+  // "remove animations" / battery saver on (it is the shop's welcome).
+  setTimeout(openFilm, 450);
 })();

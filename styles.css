@@ -1683,9 +1683,9 @@ body.is-ready .hero .reveal { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
-  *,
-  *::before,
-  *::after {
+  *:not(.film):not(.film *),
+  *:not(.film):not(.film *)::before,
+  *:not(.film):not(.film *)::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
@@ -1694,9 +1694,7 @@ body.is-ready .hero .reveal { opacity: 1; transform: none; }
   .reveal,
   .hero .reveal { opacity: 1 !important; transform: none !important; }
 
-  .film__progress { display: none; }
   .marquee__track { animation: none; }
   .hero__scroll-line::after { animation: none; transform: scaleY(1); }
   .hero__stars { animation: none; }
-  .film__fx { display: none; }
 }
