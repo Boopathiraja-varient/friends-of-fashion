@@ -1111,9 +1111,8 @@
     pageFx.paused = document.hidden;
   });
 
-  const seen = persist.get(LOCAL_WELCOMED) === "1" || store.get(SESSION_WELCOMED) === "1";
-
-  if (!seen && !prefersReduced()) {
+  // The welcome film plays on every open and refresh.
+  if (!prefersReduced()) {
     // Hold the hero until the film has played.
     setTimeout(openFilm, 450);
   } else {

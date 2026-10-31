@@ -32,8 +32,8 @@ For the typefaces to load, the page needs an internet connection the first time
 - On phones the film uses the full dynamic viewport height (`100dvh`), safe-area
   insets for the bottom controls, and a portrait-specific type/control rhythm.
 - Replay it with the "Replay the welcome" button in the Diwali section.
-  To see the automatic first-visit film again, clear this site's local storage
-  (key `fof-welcomed-once`).
+  The film plays automatically on every open and refresh (skipped only for
+  visitors whose device asks for reduced motion).
 - Cracker sound is **off by default**. Use the sound control in the film, or
   "Light the sky" in the Diwali section, to turn it on. The sound preference is
   remembered for the session. Audio always starts from a real tap, so browsers
