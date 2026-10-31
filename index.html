@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Friends of Fashion — Men's Ethnic & Occasion Wear, Bodinayakanur</title>
+<meta name="description" content="Friends of Fashion is a men's atelier in Bodinayakanur, Theni district. Newly launched stone-work and printed shirts, easy pants, plus formal and traditional wear for Diwali.">
+<meta name="theme-color" content="#0E0507">
+<meta property="og:title" content="Friends of Fashion — This Diwali, wear the light.">
+<meta property="og:description" content="Newly launched shirts and pants, formal and traditional wear — cut to order in Bodinayakanur.">
+<link rel="icon" type="image/png" href="assets/friends-of-fashion-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Noto+Serif+Tamil:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261031-6">
+<noscript>
+<style>
+  .reveal, .hero .reveal { opacity: 1 !important; transform: none !important; }
+</style>
+</noscript>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Shared pattern definitions -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="p-temple" width="24" height="18" patternUnits="userSpaceOnUse">
+      <path d="M0 18 L12 4 L24 18" fill="none" stroke="currentColor" stroke-width="1.1"/>
+      <circle cx="12" cy="2" r="1.3" fill="currentColor"/>
+    </pattern>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     WELCOME FILM — the Diwali invite, drawn in code
+     ============================================================ -->
+<div class="film" id="welcomeFilm" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Diwali welcome film for Friends of Fashion">
+  <canvas class="film__fx" id="filmFx" aria-hidden="true"></canvas>
+
+  <svg class="film__scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <radialGradient id="sky" cx="50%" cy="88%" r="85%">
+        <stop offset="0%" stop-color="#5A151C"/>
+        <stop offset="42%" stop-color="#2B0A0F"/>
+        <stop offset="100%" stop-color="#080304"/>
+      </radialGradient>
+      <radialGradient id="moon" cx="38%" cy="34%" r="70%">
+        <stop offset="0%" stop-color="#FFF6E2"/>
+        <stop offset="70%" stop-color="#F0D79B"/>
+        <stop offset="100%" stop-color="#C9A45E"/>
+      </radialGradient>
+      <radialGradient id="groundGlow" cx="50%" cy="100%" r="60%">
+        <stop offset="0%" stop-color="#E9A23B" stop-opacity=".55"/>
+        <stop offset="60%" stop-color="#C0322B" stop-opacity=".14"/>
+        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0%" stop-color="#E9A23B"/>
+        <stop offset="55%" stop-color="#F6D187"/>
+        <stop offset="100%" stop-color="#FFF6E2"/>
+      </linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#E4C183"/>
+        <stop offset="100%" stop-color="#8E6A2C"/>
+      </linearGradient>
+    </defs>
+
+    <rect width="1600" height="900" fill="url(#sky)"/>
+
+    <g class="film__stars">
+      <circle cx="120" cy="140" r="1.6" class="star" style="--d:0s"/><circle cx="240" cy="90" r="1.1" class="star" style="--d:.8s"/>
+      <circle cx="360" cy="180" r="1.4" class="star" style="--d:1.6s"/><circle cx="470" cy="120" r="1" class="star" style="--d:2.4s"/>
+      <circle cx="560" cy="220" r="1.5" class="star" style="--d:.4s"/><circle cx="700" cy="100" r="1.2" class="star" style="--d:1.2s"/>
+      <circle cx="850" cy="160" r="1.6" class="star" style="--d:2s"/><circle cx="960" cy="90" r="1" class="star" style="--d:.2s"/>
+      <circle cx="1080" cy="200" r="1.3" class="star" style="--d:1.8s"/><circle cx="1180" cy="120" r="1.5" class="star" style="--d:1s"/>
+      <circle cx="1320" cy="300" r="1.2" class="star" style="--d:2.6s"/><circle cx="1420" cy="210" r="1.6" class="star" style="--d:.6s"/>
+      <circle cx="1500" cy="120" r="1" class="star" style="--d:1.4s"/><circle cx="300" cy="300" r="1.2" class="star" style="--d:2.2s"/>
+      <circle cx="620" cy="330" r="1" class="star" style="--d:.9s"/><circle cx="1000" cy="290" r="1.4" class="star" style="--d:1.7s"/>
+    </g>
+
+    <g class="film__moon">
+      <circle cx="1270" cy="190" r="120" fill="#F0D79B" opacity=".08"/>
+      <circle cx="1270" cy="190" r="76" fill="url(#moon)"/>
+      <circle cx="1246" cy="170" r="12" fill="#C9A45E" opacity=".22"/>
+      <circle cx="1292" cy="206" r="8" fill="#C9A45E" opacity=".18"/>
+      <circle cx="1268" cy="222" r="5" fill="#C9A45E" opacity=".16"/>
+    </g>
+
+    <ellipse cx="800" cy="880" rx="720" ry="260" fill="url(#groundGlow)"/>
+
+    <g class="film__temple" fill="#0A0203" stroke="rgba(217,178,106,.22)" stroke-width="1">
+      <rect x="0" y="762" width="1600" height="138"/>
+      <polygon points="380,762 470,762 462,690 388,690"/>
+      <polygon points="1130,762 1220,762 1212,690 1138,690"/>
+      <polygon points="480,762 1120,762 1080,700 520,700"/>
+      <polygon points="540,700 1060,700 1030,645 570,645"/>
+      <polygon points="600,645 1000,645 975,595 625,595"/>
+      <polygon points="655,595 945,595 925,550 675,550"/>
+      <polygon points="705,550 895,550 880,510 720,510"/>
+      <path d="M745 455 h110 a27 27 0 0 1 27 27 v28 h-164 v-28 a27 27 0 0 1 27 -27 z"/>
+      <g stroke="none" fill="url(#brass)">
+        <circle cx="760" cy="442" r="7"/><circle cx="800" cy="434" r="9"/><circle cx="840" cy="442" r="7"/>
+      </g>
+      <g stroke="rgba(240,215,155,.55)" stroke-width="1.4">
+        <line x1="760" y1="442" x2="760" y2="414"/><line x1="800" y1="434" x2="800" y2="400"/><line x1="840" y1="442" x2="840" y2="414"/>
+      </g>
+      <g stroke="rgba(217,178,106,.30)" stroke-width="1.2">
+        <line x1="520" y1="700" x2="1080" y2="700"/><line x1="570" y1="645" x2="1030" y2="645"/>
+        <line x1="625" y1="595" x2="975" y2="595"/><line x1="675" y1="550" x2="925" y2="550"/>
+      </g>
+      <path d="M742 762 v-52 a58 58 0 0 1 116 0 v52 z" fill="#160609" stroke="rgba(240,215,155,.45)"/>
+    </g>
+
+    <g class="film__lamps">
+      <g class="lamp" style="--i:0" transform="translate(560,770)">
+        <ellipse cx="0" cy="14" rx="46" ry="10" fill="#E9A23B" opacity=".18"/>
+        <path d="M-24 4 Q0 26 24 4 Q0 12 -24 4 Z" fill="url(#brass)"/>
+        <path class="lamp__flame" d="M0 -30 C10 -16 12 -6 0 2 C-12 -6 -10 -16 0 -30 Z" fill="url(#flame)"/>
+      </g>
+      <g class="lamp" style="--i:1" transform="translate(690,790)">
+        <ellipse cx="0" cy="14" rx="46" ry="10" fill="#E9A23B" opacity=".18"/>
+        <path d="M-24 4 Q0 26 24 4 Q0 12 -24 4 Z" fill="url(#brass)"/>
+        <path class="lamp__flame" d="M0 -30 C10 -16 12 -6 0 2 C-12 -6 -10 -16 0 -30 Z" fill="url(#flame)"/>
+      </g>
+      <g class="lamp" style="--i:2" transform="translate(800,800)">
+        <ellipse cx="0" cy="14" rx="52" ry="12" fill="#E9A23B" opacity=".24"/>
+        <path d="M-28 4 Q0 28 28 4 Q0 13 -28 4 Z" fill="url(#brass)"/>
+        <path class="lamp__flame" d="M0 -36 C12 -19 14 -7 0 2 C-14 -7 -12 -19 0 -36 Z" fill="url(#flame)"/>
+      </g>
+      <g class="lamp" style="--i:3" transform="translate(910,790)">
+        <ellipse cx="0" cy="14" rx="46" ry="10" fill="#E9A23B" opacity=".18"/>
+        <path d="M-24 4 Q0 26 24 4 Q0 12 -24 4 Z" fill="url(#brass)"/>
+        <path class="lamp__flame" d="M0 -30 C10 -16 12 -6 0 2 C-12 -6 -10 -16 0 -30 Z" fill="url(#flame)"/>
+      </g>
+      <g class="lamp" style="--i:4" transform="translate(1040,770)">
+        <ellipse cx="0" cy="14" rx="46" ry="10" fill="#E9A23B" opacity=".18"/>
+        <path d="M-24 4 Q0 26 24 4 Q0 12 -24 4 Z" fill="url(#brass)"/>
+        <path class="lamp__flame" d="M0 -30 C10 -16 12 -6 0 2 C-12 -6 -10 -16 0 -30 Z" fill="url(#flame)"/>
+      </g>
+    </g>
+  </svg>
+
+  <div class="film__vignette" aria-hidden="true"></div>
+
+  <!-- Saravedi: the long string of crackers, hung at the edge of the frame -->
+  <div class="film__saravedi" aria-hidden="true">
+    <span class="film__saravedi-hook"></span>
+    <svg class="film__saravedi-string" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path d="M50 0 C38 20 62 40 50 60 C42 74 58 88 50 100"/>
+    </svg>
+    <div class="film__saravedi-crackers"></div>
+    <span class="film__saravedi-spark"></span>
+  </div>
+
+  <div class="film__content">
+    <div class="film__seal">
+      <img src="assets/friends-of-fashion-logo.png" alt="" width="512" height="512" decoding="async">
+    </div>
+    <p class="film__tamil" lang="ta">வணக்கம்</p>
+    <h1 class="film__title" aria-label="Friends of Fashion">
+      <span class="film__word" aria-hidden="true">
+        <span style="--c:0">F</span><span style="--c:1">R</span><span style="--c:2">I</span><span style="--c:3">E</span><span style="--c:4">N</span><span style="--c:5">D</span><span style="--c:6">S</span><span class="film__space" style="--c:7"> </span><span style="--c:8">O</span><span style="--c:9">F</span><span class="film__space" style="--c:10"> </span><span style="--c:11">F</span><span style="--c:12">A</span><span style="--c:13">S</span><span style="--c:14">H</span><span style="--c:15">I</span><span style="--c:16">O</span><span style="--c:17">N</span>
+      </span>
+    </h1>
+    <p class="film__tagline">A Diwali welcome <span aria-hidden="true">·</span> Bodinayakanur</p>
+    <button class="btn btn--gold film__enter" type="button">Enter the celebration</button>
+  </div>
+
+  <div class="film__footer">
+    <span class="film__hint">Best viewed with the lights low</span>
+    <div class="film__progress" aria-hidden="true"><span class="film__progress-bar"></span></div>
+    <button class="film__sound" id="soundToggle" type="button" aria-pressed="false" aria-label="Enable cracker sound">
+      <svg class="film__sound-icon film__sound-icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5Z"/><path d="m17 9 4 6M21 9l-4 6"/></svg>
+      <svg class="film__sound-icon film__sound-icon--on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5Z"/><path d="M17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12"/></svg>
+      <span class="film__sound-label">Sound off</span>
+    </button>
+    <button class="film__skip" type="button">Skip <span class="film__skip-arrow" aria-hidden="true">→</span></button>
+  </div>
+</div>
+
+<!-- Page-level firework canvas (bursts on demand) -->
+<canvas class="page-fx" id="pageFx" aria-hidden="true"></canvas>
+
+<!-- ============================================================
+     SITE
+     ============================================================ -->
+<header class="site-head" id="siteHead">
+  <div class="site-head__inner">
+    <a class="brand" href="#top" aria-label="Friends of Fashion, home">
+      <span class="brand__mark" aria-hidden="true">
+        <img src="assets/friends-of-fashion-logo.png" alt="" width="512" height="512" decoding="async">
+      </span>
+      <span class="brand__text">Friends <em>of</em> Fashion</span>
+    </a>
+
+    <nav class="nav" id="primaryNav" aria-label="Primary">
+      <a class="nav__link" href="#collection">Collection</a>
+      <a class="nav__link" href="#craft">The Craft</a>
+      <a class="nav__link" href="#diwali">Diwali</a>
+      <a class="nav__link" href="#visit">Visit</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero__bg" aria-hidden="true">
+      <div class="hero__stars"></div>
+      <svg class="hero__temple" viewBox="0 0 1600 520" preserveAspectRatio="xMidYMax slice" fill="none" stroke="currentColor" stroke-width="1.1">
+        <rect x="0" y="400" width="1600" height="120"/>
+        <polygon points="480,400 1120,400 1080,340 520,340"/>
+        <polygon points="540,340 1060,340 1030,288 570,288"/>
+        <polygon points="600,288 1000,288 975,240 625,240"/>
+        <polygon points="655,240 945,240 925,198 675,198"/>
+        <polygon points="705,198 895,198 880,160 720,160"/>
+        <path d="M745 108 h110 a26 26 0 0 1 26 26 v26 h-162 v-26 a26 26 0 0 1 26 -26 z"/>
+        <path d="M760 108v-26M800 108v-34M840 108v-26"/>
+        <circle cx="760" cy="80" r="4"/><circle cx="800" cy="72" r="5"/><circle cx="840" cy="80" r="4"/>
+        <path d="M742 400 v-50 a58 58 0 0 1 116 0 v50"/>
+      </svg>
+      <div class="hero__glow"></div>
+    </div>
+
+    <div class="hero__inner container">
+      <div class="hero__copy">
+        <p class="eyebrow reveal" style="--i:0"><span lang="ta" class="eyebrow__tamil">தீபாவளி</span> <span class="eyebrow__dot" aria-hidden="true"></span> Bodinayakanur, 2026</p>
+
+        <h1 class="hero__title reveal" style="--i:1">
+          This Diwali,<br>
+          <em>wear the light.</em>
+        </h1>
+
+        <p class="hero__lede reveal" style="--i:2">
+          A men's atelier in Bodinayakanur for the season's finest hours — festive shirts,
+          easy pants, formal and traditional wear, cut for the way the south celebrates.
+        </p>
+
+        <div class="hero__actions reveal" style="--i:3">
+          <a class="btn btn--gold" href="#collection">
+            Explore the collection
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+          </a>
+          <button class="btn btn--ghost" type="button" data-replay-film>
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5 16 12l-6 3.5v-7Z" fill="currentColor" stroke="none"/></svg>
+            Replay the welcome
+          </button>
+        </div>
+
+        <ul class="hero__meta reveal" style="--i:4">
+          <li>Men's ethnic &amp; occasion wear</li>
+          <li>Bodinayakanur, Theni district</li>
+          <li>Fittings by appointment</li>
+        </ul>
+      </div>
+
+      <aside class="hero__aside reveal" style="--i:2" aria-label="Newly launched collection">
+        <div class="arch">
+          <div class="arch__inner">
+            <span class="arch__tag">The new edit <em>2026</em></span>
+            <div class="arch__silk" aria-hidden="true"></div>
+            <div class="arch__lamps" aria-hidden="true">
+              <svg class="arch__lamp" viewBox="0 0 60 96" style="--i:0">
+                <ellipse cx="30" cy="78" rx="28" ry="6" fill="#E9A23B" opacity=".22"/>
+                <path d="M6 68 Q30 88 54 68 Q30 76 6 68 Z" fill="url(#brassArch)"/>
+                <path class="arch__flame" d="M30 34 C38 48 39 58 30 64 C21 58 22 48 30 34 Z" fill="#F6D187"/>
+              </svg>
+              <svg class="arch__lamp" viewBox="0 0 60 96" style="--i:1">
+                <ellipse cx="30" cy="78" rx="30" ry="7" fill="#E9A23B" opacity=".26"/>
+                <path d="M4 66 Q30 90 56 66 Q30 75 4 66 Z" fill="url(#brassArch)"/>
+                <path class="arch__flame" d="M30 28 C39 44 40 56 30 63 C20 56 21 44 30 28 Z" fill="#F6D187"/>
+              </svg>
+              <svg class="arch__lamp" viewBox="0 0 60 96" style="--i:2">
+                <ellipse cx="30" cy="78" rx="28" ry="6" fill="#E9A23B" opacity=".22"/>
+                <path d="M6 68 Q30 88 54 68 Q30 76 6 68 Z" fill="url(#brassArch)"/>
+                <path class="arch__flame" d="M30 34 C38 48 39 58 30 64 C21 58 22 48 30 34 Z" fill="#F6D187"/>
+              </svg>
+              <svg width="0" height="0" aria-hidden="true"><defs><linearGradient id="brassArch" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4C183"/><stop offset="100%" stop-color="#8E6A2C"/></linearGradient></defs></svg>
+            </div>
+            <p class="arch__quote">“Light, worn well.”</p>
+          </div>
+          <span class="arch__corner arch__corner--tl" aria-hidden="true"></span>
+          <span class="arch__corner arch__corner--tr" aria-hidden="true"></span>
+        </div>
+        <div class="aside-card">
+          <p class="aside-card__kicker">Stone work, prints &amp; easy pants</p>
+          <p class="aside-card__text">Newly arrived pieces, finished by hand in our Bodinayakanur atelier.</p>
+          <a class="link-arrow" href="#collection">See the collection
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <a class="hero__scroll" href="#collection" aria-label="Scroll to the collection">
+      <span>Scroll</span><span class="hero__scroll-line" aria-hidden="true"></span>
+    </a>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Stone work</span><span class="marquee__sep">·</span>
+      <span>Printed shirts</span><span class="marquee__sep">·</span>
+      <span>Baggy pants</span><span class="marquee__sep">·</span>
+      <span>Polo fit</span><span class="marquee__sep">·</span>
+      <span>Formal wear</span><span class="marquee__sep">·</span>
+      <span>Traditional wear</span><span class="marquee__sep">·</span>
+      <span>Bespoke tailoring</span><span class="marquee__sep">·</span>
+      <span>Stone work</span><span class="marquee__sep">·</span>
+      <span>Printed shirts</span><span class="marquee__sep">·</span>
+      <span>Baggy pants</span><span class="marquee__sep">·</span>
+      <span>Polo fit</span><span class="marquee__sep">·</span>
+      <span>Formal wear</span><span class="marquee__sep">·</span>
+      <span>Traditional wear</span><span class="marquee__sep">·</span>
+      <span>Bespoke tailoring</span><span class="marquee__sep">·</span>
+    </div>
+  </div>
+
+  <!-- COLLECTION — NEWLY LAUNCHED -->
+  <section class="section collection" id="collection">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow reveal">The collection · Just in</p>
+        <h2 class="section-title reveal" style="--i:1">Newly launched</h2>
+        <p class="section-lede reveal" style="--i:2">
+          Stone work, prints and easy bottoms — the newest pieces to reach the atelier,
+          ready to be fitted for the season.
+        </p>
+      </div>
+
+      <div class="products">
+        <article class="product reveal" style="--i:0">
+          <div class="product__media product__media--photo">
+            <img src="assets/collection/stone-work-shirt.jpg" alt="Stone Work Shirt from Friends of Fashion" loading="lazy" decoding="async" width="194" height="259">
+            <span class="product__tag">Festive</span>
+          </div>
+          <div class="product__body">
+            <h3 class="product__name">Stone Work Shirt</h3>
+            <p class="product__desc">Stone-work detailing across a festive shirt, made for evenings under the lights.</p>
+            <div class="product__foot"><span>Price on request</span><a class="link-arrow" href="#visit">Enquire</a></div>
+          </div>
+        </article>
+
+        <article class="product reveal" style="--i:1">
+          <div class="product__media product__media--photo">
+            <img src="assets/collection/bottom-printed-shirt.jpg" alt="Bottom Printed Shirt from Friends of Fashion" loading="lazy" decoding="async" width="896" height="1195">
+            <span class="product__tag">New in</span>
+          </div>
+          <div class="product__body">
+            <h3 class="product__name">Bottom Printed Shirt</h3>
+            <p class="product__desc">A printed shirt with a considered finish — easy with denim or a matching bottom.</p>
+            <div class="product__foot"><span>Price on request</span><a class="link-arrow" href="#visit">Enquire</a></div>
+          </div>
+        </article>
+
+        <article class="product reveal" style="--i:2">
+          <div class="product__media product__media--photo">
+            <img src="assets/collection/baggy-pant.jpg" alt="Baggy Pant from Friends of Fashion" loading="lazy" decoding="async" width="399" height="501">
+            <span class="product__tag">Relaxed</span>
+          </div>
+          <div class="product__body">
+            <h3 class="product__name">Baggy Pant</h3>
+            <p class="product__desc">A wide, easy drape with a clean waistband, cut to move with you.</p>
+            <div class="product__foot"><span>Price on request</span><a class="link-arrow" href="#visit">Enquire</a></div>
+          </div>
+        </article>
+
+        <article class="product reveal" style="--i:3">
+          <div class="product__media product__media--photo">
+            <img src="assets/collection/polo-fit-pants.jpg" alt="Polo Fit Pant from Friends of Fashion" loading="lazy" decoding="async" width="933" height="1400">
+            <span class="product__tag">Tailored</span>
+          </div>
+          <div class="product__body">
+            <h3 class="product__name">Polo Fit Pant</h3>
+            <p class="product__desc">A trim polo-fit cut with a sharp line, for day-to-evening wear.</p>
+            <div class="product__foot"><span>Price on request</span><a class="link-arrow" href="#visit">Enquire</a></div>
+          </div>
+        </article>
+      </div>
+
+      <p class="collection__note reveal">
+        Every piece can be altered in-house. Ask about turnaround when you book.
+      </p>
+    </div>
+  </section>
+
+  <!-- COLLECTION — EVERYDAY -->
+  <section class="section collection collection--everyday" id="everyday">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow reveal">The everyday edit</p>
+        <h2 class="section-title reveal" style="--i:1">Everyday essentials</h2>
+        <p class="section-lede reveal" style="--i:2">
+          Formal and traditional pieces for the rest of the year — measured, cut and
+          finished in Bodinayakanur.
+        </p>
+      </div>
+
+      <div class="products products--duo">
+        <article class="product reveal" style="--i:0">
+          <div class="product__media product__media--photo">
+            <img src="assets/collection/formal-wear.jpg" alt="Formal Wear from Friends of Fashion" loading="lazy" decoding="async" width="387" height="516">
+            <span class="product__tag">Classic</span>
+          </div>
+          <div class="product__body">
+            <h3 class="product__name">Formal Wear</h3>
+            <p class="product__desc">Formal shirting and trousers, cut to your measurements for the season's occasions.</p>
+            <div class="product__foot"><span>Price on request</span><a class="link-arrow" href="#visit">Enquire</a></div>
+          </div>
+        </article>
+
+        <article class="product reveal" style="--i:1">
+          <div class="product__media product__media--photo">
+            <img src="assets/collection/traditional-wear.jpg" alt="Traditional Wear from Friends of Fashion" loading="lazy" decoding="async" width="387" height="516">
+            <span class="product__tag">Heritage</span>
+          </div>
+          <div class="product__body">
+            <h3 class="product__name">Traditional Wear</h3>
+            <p class="product__desc">Traditional pieces in silk and cotton, finished by hand in the atelier.</p>
+            <div class="product__foot"><span>Price on request</span><a class="link-arrow" href="#visit">Enquire</a></div>
+          </div>
+        </article>
+      </div>
+
+      <p class="collection__note reveal">
+        Formal fittings and traditional orders are made to measure. Ask us about fabric choices.
+      </p>
+    </div>
+  </section>
+
+  <!-- CRAFT -->
+  <section class="section craft" id="craft">
+    <div class="container craft__grid">
+      <div class="craft__copy">
+        <p class="eyebrow reveal">The craft</p>
+        <h2 class="section-title reveal" style="--i:1">Measured here.<br>Finished by hand.</h2>
+        <p class="reveal" style="--i:2">
+          We select every fabric with care — crisp cotton, easy blends and festive silks — and bring
+          it home to Bodinayakanur, where each piece is measured, cut and finished by hand. Nothing
+          leaves the atelier until the fall sits right and the collar holds its shape.
+        </p>
+        <p class="reveal" style="--i:3">
+          For the festive season we keep the workshop open late — so a shirt bought on a Tuesday
+          can be altered and ready by the weekend.
+        </p>
+
+        <ul class="craft__points">
+          <li class="reveal" style="--i:4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4 20 20 4M9 4h11v11"/></svg>
+            <span><strong>Hand-finished</strong>Buttons, seams and hems finished in-house.</span>
+          </li>
+          <li class="reveal" style="--i:5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M3 7h18M6 7v13h12V7M9 7V4h6v3"/></svg>
+            <span><strong>Cut to order</strong>Made for your measurements, not a size chart.</span>
+          </li>
+          <li class="reveal" style="--i:6">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+            <span><strong>Personal fittings</strong>By appointment, through the festive week.</span>
+          </li>
+        </ul>
+
+        <figure class="craft__quote reveal" style="--i:7">
+          <blockquote>“A festive shirt should feel like it was made for the man, not the season.”</blockquote>
+          <figcaption>— The atelier</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIWALI WELCOME BAND -->
+  <section class="section diwali" id="diwali">
+    <div class="container">
+      <div class="diwali__panel reveal">
+        <div class="diwali__garland" aria-hidden="true">
+          <svg viewBox="0 0 1200 60" preserveAspectRatio="none"><rect width="1200" height="60" fill="url(#p-temple)" style="color:#D9B26A;opacity:.5"/></svg>
+        </div>
+        <p class="diwali__tamil" lang="ta">தீபாவளி வாழ்த்துக்கள்</p>
+        <h2 class="diwali__title">A warm Diwali welcome,<br>from our family to yours.</h2>
+        <p class="diwali__text">
+          This festive season the atelier stays open late for fittings. Ask us about alterations,
+          gift wrapping, and the pieces we are finishing this week.
+        </p>
+        <div class="diwali__actions">
+          <a class="btn btn--gold" href="tel:+916380894843">Call the store</a>
+          <button class="btn btn--ghost" type="button" data-fireworks>
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/><circle cx="12" cy="12" r="2.4"/></svg>
+            Light the sky
+          </button>
+        </div>
+        <p class="diwali__hours">Open daily · 10:00 – 22:00, all week</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section class="section visit" id="visit">
+    <div class="container visit__grid">
+      <div class="visit__copy">
+        <p class="eyebrow reveal">Visit</p>
+        <h2 class="section-title reveal" style="--i:1">Come in for a fitting.</h2>
+        <p class="section-lede reveal" style="--i:2">
+          Bodinayakanur, Theni district. Appointments are recommended through Diwali week — we will keep
+          the coffee, the mirror and the good light ready.
+        </p>
+
+        <dl class="visit__details">
+          <div class="reveal" style="--i:3">
+            <dt>Address</dt>
+            <dd><a href="https://maps.google.com/?q=Friends+of+Fashion,+Poo+Market,+Bodinayakanur,+Tamil+Nadu+625513" target="_blank" rel="noopener">Opposite the town police station,<br>near Poo Market, Bodinayakanur 625513<br>Theni district, Tamil Nadu</a></dd>
+          </div>
+          <div class="reveal" style="--i:4">
+            <dt>Hours</dt>
+            <dd>Monday – Sunday<br>10:00 – 22:00</dd>
+          </div>
+          <div class="reveal" style="--i:5">
+            <dt>Contact</dt>
+            <dd>
+              <a href="tel:+916380894843">+91 63808 94843</a><br>
+              <a href="https://wa.me/916380894843" target="_blank" rel="noopener">WhatsApp us</a>
+            </dd>
+          </div>
+        </dl>
+
+        <div class="visit__actions reveal" style="--i:6">
+          <a class="btn btn--gold" href="https://maps.google.com/?q=Friends+of+Fashion,+Poo+Market,+Bodinayakanur,+Tamil+Nadu+625513" target="_blank" rel="noopener">
+            Get directions
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="https://wa.me/916380894843" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="visit__card reveal" style="--i:2">
+        <div class="visit__card-top">
+          <span class="visit__card-kicker">At the atelier</span>
+          <span class="visit__card-seal" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1"><circle cx="32" cy="32" r="26"/><circle cx="32" cy="32" r="21" stroke-dasharray="1 3"/><path d="M32 16c6 8 8 12 8 16a8 8 0 1 1-16 0c0-4 2-8 8-16Z"/></svg>
+          </span>
+        </div>
+        <p class="visit__card-title">Friends of Fashion</p>
+        <p class="visit__card-sub">Men's ethnic &amp; occasion wear</p>
+        <div class="visit__card-rule" aria-hidden="true"><span></span></div>
+        <ul class="visit__list">
+          <li><span>Shirts &amp; pants</span><span>Formal wear</span></li>
+          <li><span>Traditional wear</span><span>Bespoke tailoring</span></li>
+          <li><span>Alterations in-house</span><span>Gift wrapping</span></li>
+        </ul>
+        <p class="visit__card-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          Opposite the town police station, near Poo Market<br>Bodinayakanur 625513 · Theni district
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="container">
+    <div class="site-foot__top">
+      <div class="site-foot__brand">
+        <span class="brand brand--foot">
+          <span class="brand__mark" aria-hidden="true">
+            <img src="assets/friends-of-fashion-logo.png" alt="" width="512" height="512" decoding="async">
+          </span>
+          <span class="brand__text">Friends <em>of</em> Fashion</span>
+        </span>
+        <p>Men's ethnic and occasion wear.<br>Cut to order in Bodinayakanur.</p>
+      </div>
+
+      <nav class="site-foot__nav" aria-label="Footer">
+        <a href="#collection">Collection</a>
+        <a href="#everyday">Everyday</a>
+        <a href="#craft">The Craft</a>
+        <a href="#diwali">Diwali</a>
+        <a href="#visit">Visit</a>
+      </nav>
+
+      <div class="site-foot__social">
+        <a href="https://wa.me/916380894843" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.9 7L4 20l1.5-4A8 8 0 1 1 20 11.5Z"/><path d="M8.5 8.5c0 4 3 7 7 7 1 0 1.5-.6 1.5-1.3 0-.4-.3-.7-.8-.9l-1.6-.6c-.4-.1-.7 0-.9.3l-.5.6a6 6 0 0 1-2.3-2.3l.6-.5c.3-.2.4-.5.3-.9L11 8.3c-.2-.5-.5-.8-.9-.8-.7 0-1.6.5-1.6 1Z" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.instagram.com/friends_of_fashion" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="tel:+916380894843" aria-label="Call the store">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6.4 3.5h3.1l1.5 3.9-2 1.5a12.4 12.4 0 0 0 6.1 6.1l1.5-2 3.9 1.5v3.1a1.9 1.9 0 0 1-2 1.9C11.2 20 4 12.8 3.5 5.5a1.9 1.9 0 0 1 1.9-2Z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="site-foot__bottom">
+      <p>© <span id="year">2026</span> Friends of Fashion · Bodinayakanur</p>
+      <p lang="ta">தீபாவளி வாழ்த்துக்கள்</p>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js?v=20261031-7" defer></script>
+</body>
+</html>
