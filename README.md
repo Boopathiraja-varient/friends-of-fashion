@@ -34,9 +34,11 @@ For the typefaces to load, the page needs an internet connection the first time
 - Replay it with the "Replay the welcome" button in the Diwali section.
   To see the automatic first-visit film again, clear this site's local storage
   (key `fof-welcomed-once`).
-- The sound toggle in the bottom bar starts **off** — browsers block audio
-  until the visitor taps something. Tapping it enables the cracker sounds for
-  the rest of the session.
+- Cracker sound is **on by default**. The page attempts to start it
+  automatically on load. If the browser blocks unmuted autoplay, the welcome
+  holds on its poster with "Tap anywhere for sound"; the first tap, click or
+  key press resumes the audio and starts the film from the beginning, so the
+  saravedi is not missed. The sound preference is remembered for the session.
 - "Light the sky" in the Diwali section fires a burst on demand and switches
   sound on (that tap counts as permission).
 - Visitors who prefer reduced motion never get the automatic film, and the

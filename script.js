@@ -45,7 +45,12 @@
       this.master = null;
       this.noiseBuffer = null;
       this.reverb = null;
-      this.enabled = store.get(SESSION_SOUND) === "on";
+      this.supported = !!(window.AudioContext || window.webkitAudioContext);
+      // Sound is on by default. Browsers still gate unmuted audio until the
+      // first gesture, so the page attempts autoplay and arms a one-time
+      // unlock on the first tap/key press when that attempt is blocked.
+      this.enabled = store.get(SESSION_SOUND) !== "off";
+      this.unlocked = false;
       this.samples = {};
       this.samplesLoading = false;
       this.samplesLoaded = false;
@@ -179,7 +184,7 @@
     }
 
     playBuffer(buffer, when = 0, { gain = 1, pan = 0, rate = 1, duration = 0, fade = 0.12 } = {}) {
-      if (!buffer || !this.ctx) return false;
+      if (!buffer || !this.ctx || this.ctx.state !== "running") return false;
 
       const t = this.ctx.currentTime + Math.max(0, when);
       const src = this.ctx.createBufferSource();
@@ -225,8 +230,12 @@
       this.enabled = on;
       store.set(SESSION_SOUND, on ? "on" : "off");
       if (on) {
-        if (!this.ensure()) return;
+        if (!this.ensure()) {
+          syncSoundUI();
+          return;
+        }
         this.master.gain.setTargetAtTime(0.65, this.ctx.currentTime, 0.04);
+        this.unlock();
       } else if (this.master) {
         this.master.gain.setTargetAtTime(0, this.ctx.currentTime, 0.04);
       }
@@ -237,8 +246,30 @@
       this.setEnabled(!this.enabled);
     }
 
+    /* Resume the context. Called on load (autoplay attempt) and again from
+       the first real gesture; the promise resolves true only when audio can
+       actually run. */
+    unlock() {
+      if (!this.enabled || !this.ensure()) return Promise.resolve(false);
+      if (this.ctx.state === "running") {
+        this.unlocked = true;
+        return Promise.resolve(true);
+      }
+      try {
+        return Promise.resolve(this.ctx.resume()).then(
+          () => {
+            this.unlocked = this.ctx.state === "running";
+            return this.unlocked;
+          },
+          () => false
+        );
+      } catch {
+        return Promise.resolve(false);
+      }
+    }
+
     ready() {
-      return this.enabled && this.ensure();
+      return this.enabled && this.ensure() && this.ctx.state === "running";
     }
 
     panner(pan) {
@@ -779,11 +810,15 @@
   const skipBtn = film.querySelector(".film__skip");
   const soundBtn = document.getElementById("soundToggle");
   const soundLabel = soundBtn ? soundBtn.querySelector(".film__sound-label") : null;
+  const soundHint = document.getElementById("soundHint");
 
   let filmOpen = false;
+  let filmStarted = false;
   let filmTimers = [];
   let autoClose = null;
   let lastFocused = null;
+  let unlockArmed = false;
+  let unlocking = false;
 
   const clearTimers = () => {
     filmTimers.forEach(clearTimeout);
@@ -796,10 +831,79 @@
 
   function syncSoundUI() {
     if (!soundBtn) return;
-    const on = audio.enabled;
-    soundBtn.setAttribute("aria-pressed", String(on));
-    soundBtn.setAttribute("aria-label", on ? "Mute cracker sound" : "Enable cracker sound");
-    if (soundLabel) soundLabel.textContent = on ? "Sound on" : "Sound off";
+    const blocked = audio.enabled && audio.supported && !audio.unlocked;
+    const playing = audio.enabled && audio.unlocked;
+    soundBtn.setAttribute("aria-pressed", String(playing));
+    soundBtn.setAttribute(
+      "aria-label",
+      blocked ? "Tap to enable cracker sound" : playing ? "Mute cracker sound" : "Enable cracker sound"
+    );
+    soundBtn.classList.toggle("is-blocked", blocked);
+    if (soundLabel) soundLabel.textContent = blocked ? "Tap for sound" : playing ? "Sound on" : "Sound off";
+    if (soundHint) soundHint.hidden = !blocked;
+  }
+
+  const unlockEvents = ["pointerdown", "touchstart", "keydown"];
+
+  function onUnlockGesture(event) {
+    // The sound button unlocks in its own click handler, so a blocked
+    // pointerdown here cannot resolve first and turn the sound back off.
+    // Skip should leave silently rather than firing an unlock crack.
+    const target = event.target;
+    if (target && target.closest && (target.closest("#soundToggle") || target.closest(".film__skip"))) return;
+    unlockAudio();
+  }
+
+  function armUnlock() {
+    if (unlockArmed || !audio.supported) return;
+    unlockArmed = true;
+    unlockEvents.forEach((type) => {
+      document.addEventListener(type, onUnlockGesture, {
+        capture: true,
+        passive: type !== "keydown",
+      });
+    });
+  }
+
+  function disarmUnlock() {
+    if (!unlockArmed) return;
+    unlockArmed = false;
+    unlockEvents.forEach((type) => {
+      document.removeEventListener(type, onUnlockGesture, { capture: true });
+    });
+  }
+
+  function unlockAudio() {
+    if (!audio.supported || !audio.enabled || audio.unlocked || unlocking) return;
+    unlocking = true;
+    audio.unlock().then((ok) => {
+      unlocking = false;
+      if (!ok) return;
+      onAudioUnlocked();
+      if (filmOpen) audio.confirm();
+    });
+  }
+
+  function onAudioUnlocked() {
+    audio.unlocked = true;
+    disarmUnlock();
+    syncSoundUI();
+    if (filmOpen) startFilmTimeline();
+  }
+
+  /* Try unmuted playback immediately. Most browsers refuse until a gesture,
+     so arm the one-time unlock as well; if autoplay succeeds, the promise
+     resolves and disarms it. */
+  function attemptAutoplay() {
+    if (!audio.supported || !audio.enabled) {
+      syncSoundUI();
+      return;
+    }
+    audio.unlock().then((ok) => {
+      if (ok) onAudioUnlocked();
+    });
+    if (!audio.unlocked) armUnlock();
+    syncSoundUI();
   }
 
   /* ------------------------------------------------------------------------
@@ -862,6 +966,7 @@
   function openFilm() {
     if (filmOpen) return;
     filmOpen = true;
+    filmStarted = false;
     // Mark it seen as soon as it starts, so a refresh mid-film doesn't replay it.
     persist.set(LOCAL_WELCOMED, "1");
     store.set(SESSION_WELCOMED, "1");
@@ -869,57 +974,84 @@
     clearTimers();
 
     film.classList.remove(
-      "stage-1", "stage-2", "stage-3", "stage-ready", "is-closing", "is-saravedi"
+      "stage-1", "stage-2", "stage-3", "stage-ready", "is-closing", "is-saravedi", "is-waiting"
     );
     buildSaravedi();
     film.classList.add("is-active");
     film.setAttribute("aria-hidden", "false");
     document.body.classList.add("is-locked");
 
+    const waitingForSound = audio.supported && audio.enabled && !audio.unlocked;
+
     if (prefersReduced()) {
       film.classList.add("stage-1", "stage-2", "stage-3", "stage-ready");
+      filmStarted = true;
+      enterBtn.disabled = false;
       filmFx.stop();
+    } else if (waitingForSound) {
+      // Hold the full static poster until the first gesture can unlock audio,
+      // so the welcome always starts with its soundtrack rather than joining
+      // halfway through the saravedi.
+      film.classList.add("is-waiting", "stage-1", "stage-2", "stage-3");
+      enterBtn.disabled = true;
+      filmFx.stop();
+      syncSoundUI();
     } else {
-      filmFx.resize();
-      filmFx.start();
-
-      filmTimers.push(setTimeout(() => film.classList.add("stage-1"), 220));
-      filmTimers.push(setTimeout(() => film.classList.add("stage-2"), 1450));
-      filmTimers.push(setTimeout(() => film.classList.add("stage-3"), 2950));
-      filmTimers.push(setTimeout(() => film.classList.add("stage-ready"), 3850));
-
-      filmTimers.push(setTimeout(() => {
-        fire(0.26, 0.3, { count: 56, power: 0.9 });
-        if (audio.ready()) audio.burst(0, { big: false });
-      }, 800));
-
-      filmTimers.push(setTimeout(() => {
-        fire(0.72, 0.26, { count: 74, power: 1.05 });
-        fire(0.5, 0.17, { count: 48, power: 0.8 });
-        if (audio.ready()) {
-          audio.burst(0, { big: true });
-          audio.burst(rand(0.05, 0.1), { big: false });
-        }
-      }, 2350));
-
-      filmTimers.push(setTimeout(igniteSaravedi, 3120));
-
-      filmTimers.push(setTimeout(() => {
-        filmFx.fountain(filmFx.w * 0.5, filmFx.h * 0.84, 1.9);
-        if (audio.ready()) audio.fountain(1.9);
-      }, 4200));
-
-      filmTimers.push(setTimeout(() => {
-        fire(0.3, 0.22, { count: 84, power: 1.2 });
-        fire(0.7, 0.2, { count: 78, power: 1.1 });
-        fire(0.5, 0.12, { count: 92, power: 1.35 });
-        if (audio.ready()) audio.finale();
-      }, 6100));
-
-      autoClose = setTimeout(() => closeFilm({ restoreFocus: false }), 9900);
+      enterBtn.disabled = false;
+      startFilmTimeline();
     }
 
-    enterBtn.focus({ preventScroll: true });
+    if (film.classList.contains("is-waiting")) {
+      film.focus({ preventScroll: true });
+    } else {
+      enterBtn.focus({ preventScroll: true });
+    }
+  }
+
+  function startFilmTimeline() {
+    if (!filmOpen || filmStarted) return;
+    filmStarted = true;
+    film.classList.remove("is-waiting");
+    filmFx.resize();
+    filmFx.start();
+
+    filmTimers.push(setTimeout(() => film.classList.add("stage-1"), 220));
+    filmTimers.push(setTimeout(() => film.classList.add("stage-2"), 1450));
+    filmTimers.push(setTimeout(() => film.classList.add("stage-3"), 2950));
+    filmTimers.push(setTimeout(() => {
+      film.classList.add("stage-ready");
+      enterBtn.disabled = false;
+    }, 3850));
+
+    filmTimers.push(setTimeout(() => {
+      fire(0.26, 0.3, { count: 56, power: 0.9 });
+      if (audio.ready()) audio.burst(0, { big: false });
+    }, 800));
+
+    filmTimers.push(setTimeout(() => {
+      fire(0.72, 0.26, { count: 74, power: 1.05 });
+      fire(0.5, 0.17, { count: 48, power: 0.8 });
+      if (audio.ready()) {
+        audio.burst(0, { big: true });
+        audio.burst(rand(0.05, 0.1), { big: false });
+      }
+    }, 2350));
+
+    filmTimers.push(setTimeout(igniteSaravedi, 3120));
+
+    filmTimers.push(setTimeout(() => {
+      filmFx.fountain(filmFx.w * 0.5, filmFx.h * 0.84, 1.9);
+      if (audio.ready()) audio.fountain(1.9);
+    }, 4200));
+
+    filmTimers.push(setTimeout(() => {
+      fire(0.3, 0.22, { count: 84, power: 1.2 });
+      fire(0.7, 0.2, { count: 78, power: 1.1 });
+      fire(0.5, 0.12, { count: 92, power: 1.35 });
+      if (audio.ready()) audio.finale();
+    }, 6100));
+
+    autoClose = setTimeout(() => closeFilm({ restoreFocus: false }), 9900);
   }
 
   function closeFilm({ restoreFocus = true } = {}) {
@@ -934,10 +1066,11 @@
 
     setTimeout(() => {
       film.classList.remove(
-        "is-active", "is-closing", "stage-1", "stage-2", "stage-3", "stage-ready", "is-saravedi"
+        "is-active", "is-closing", "is-waiting", "stage-1", "stage-2", "stage-3", "stage-ready", "is-saravedi"
       );
       film.setAttribute("aria-hidden", "true");
       filmFx.stop();
+      enterBtn.disabled = false;
     }, 820);
 
     if (restoreFocus) {
@@ -957,13 +1090,29 @@
   skipBtn.addEventListener("click", () => closeFilm());
 
   if (soundBtn) {
-    const noAudio = !(window.AudioContext || window.webkitAudioContext);
-    if (noAudio) soundBtn.hidden = true;
+    if (!audio.supported) soundBtn.hidden = true;
     soundBtn.addEventListener("click", () => {
+      if (audio.enabled && !audio.unlocked) {
+        unlockAudio();
+        return;
+      }
       audio.toggle();
-      if (audio.enabled) audio.confirm();
+      if (audio.enabled) {
+        audio.unlock().then((ok) => {
+          if (ok) {
+            onAudioUnlocked();
+            audio.confirm();
+          } else {
+            armUnlock();
+          }
+          syncSoundUI();
+        });
+      } else {
+        disarmUnlock();
+      }
     });
     syncSoundUI();
+    attemptAutoplay();
   }
 
   document.addEventListener("keydown", (event) => {
@@ -1001,8 +1150,15 @@
   if (lightBtn) {
     lightBtn.addEventListener("click", () => {
       if (!audio.enabled) audio.setEnabled(true);
-      audio.finale();
-      syncSoundUI();
+      audio.unlock().then((ok) => {
+        if (ok) {
+          onAudioUnlocked();
+          audio.finale();
+        } else {
+          armUnlock();
+        }
+        syncSoundUI();
+      });
 
       pageFx.resize();
       const rect = lightBtn.getBoundingClientRect();

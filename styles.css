@@ -261,6 +261,7 @@ body.is-ready .hero .reveal { opacity: 1; transform: none; }
   transition: opacity 0.8s var(--ease), visibility 0.8s;
 }
 .film.is-active { opacity: 1; visibility: visible; }
+.film:focus { outline: none; }
 .film.is-closing { opacity: 0; }
 
 .film__scene {
@@ -544,6 +545,45 @@ body.is-ready .hero .reveal { opacity: 1; transform: none; }
   color: var(--muted);
 }
 .film__hint { flex: 1; }
+.film__sound.is-blocked {
+  color: var(--gold-2);
+  animation: soundButtonPulse 2.2s ease-in-out infinite;
+}
+
+/* Shown only when the browser blocked the automatic soundtrack. Any tap,
+   click or key press resumes the audio and hides this line. */
+.film__sound-hint {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: clamp(92px, 13vh, 124px);
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  font-size: 0.56rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--gold-2);
+  opacity: 0.88;
+  pointer-events: none;
+}
+.film__sound-hint::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(233, 162, 59, 0.8);
+  animation: soundPulse 1.8s ease-in-out infinite;
+}
+.film__sound-hint[hidden] { display: none; }
+
 .film__progress {
   flex: 1;
   max-width: 240px;
@@ -558,6 +598,7 @@ body.is-ready .hero .reveal { opacity: 1; transform: none; }
   background: var(--gold);
 }
 .film.is-active .film__progress-bar { animation: filmProgress 9.5s linear forwards; }
+.film.is-waiting .film__progress-bar { animation: none; }
 
 .film__skip {
   padding: 0.35rem 0;
@@ -1514,6 +1555,16 @@ body.is-ready .hero .reveal { opacity: 1; transform: none; }
   to { width: 100%; }
 }
 
+@keyframes soundPulse {
+  0%, 100% { opacity: 0.45; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes soundButtonPulse {
+  0%, 100% { opacity: 0.72; }
+  50% { opacity: 1; }
+}
+
 @keyframes saravediPop {
   0% { opacity: 0.8; filter: brightness(1); box-shadow: 0 0 0 0 rgba(255, 210, 120, 0); }
   22% {
@@ -1660,6 +1711,7 @@ body.is-ready .hero .reveal { opacity: 1; transform: none; }
 @media (max-height: 520px) {
   .film__seal { display: none; }
   .film__content { transform: translateY(-10px); }
+  .film__sound-hint { display: none; }
   .film__tamil { font-size: 0.85rem; }
   .film__title { margin-top: 0.35em; }
   .film__enter { margin-top: clamp(18px, 3vh, 30px); }
